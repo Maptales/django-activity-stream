@@ -1,7 +1,7 @@
 from django.template import Variable, Library, Node, TemplateSyntaxError, TemplateDoesNotExist
 from django.template.loader import render_to_string
 from django.contrib.contenttypes.models import ContentType
-from actstream.models import Follow, target_stream
+from actstream.models import Follow, target_stream, actor_stream, model_stream, user_stream
 
 class DisplayActionLabel(Node):
     def __init__(self, actor, varname=None):
@@ -137,7 +137,7 @@ def follow_unfollow(actor, user):
 
 @register.inclusion_tag("activity/activity_stream.html")
 def target_stream(target):
-    return {"actions": target_stream(target)}
+    return {"actions": user_stream(target)}
     
 register.tag('display_action', do_print_action)
 register.tag('display_action_short', do_print_action_short)
