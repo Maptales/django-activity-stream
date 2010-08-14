@@ -1,6 +1,7 @@
 from django.template import Variable, Library, Node, TemplateSyntaxError, TemplateDoesNotExist
 from django.template.loader import render_to_string
 from django.contrib.contenttypes.models import ContentType
+from actstream.models import Follow
 
 class DisplayActionLabel(Node):
     def __init__(self, actor, varname=None):
