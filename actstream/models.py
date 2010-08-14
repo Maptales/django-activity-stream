@@ -21,7 +21,7 @@ class FollowManager(models.Manager):
         if follows.count():
             return reduce(or_, qs).order_by('-timestamp')
             
-    def is_following(self, user, object):
+    def is_following(self, object, user):
         ctype = ContentType.objects.get_for_model( object)
         return Follow.objects.filter(user=user,
                                      object_id=object.pk,
