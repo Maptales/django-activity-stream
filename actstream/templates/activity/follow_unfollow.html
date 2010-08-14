@@ -5,13 +5,13 @@
     <a href="{% url actstream_unfollow content_type_id=ctype.id  object_id=actor.id %}"
        id="unfollow_button"
        style="{% if not is_following %}display:none{% endif %}">
-        Unfollow {{is_following}}
+        Unfollow 
     </a>
     
     <a href="{% url actstream_follow content_type_id=ctype.id  object_id=actor.id %}"
        id="follow_button"
        style="{% if is_following %}display:none{% endif %}">
-        Follow {{is_following}}
+        Follow 
     </a> 
 </div>
 
