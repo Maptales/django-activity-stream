@@ -2,12 +2,16 @@
 {% else %}
 {% endif %}
 <div class="follow-unfollow-{{ctype.id}}-{{actor.id}}">
-    <a href="{% url actstream_unfollow content_type_id=ctype.id  object_id=actor.id %}" id="unfollow_button" style="display:none">
-    
+    <a href="{% url actstream_unfollow content_type_id=ctype.id  object_id=actor.id %}"
+       id="unfollow_button"
+       style="{% if not is_following %}display:none{% endif %}">
+        Unfollow
     </a>
     
-    <a href="{% url actstream_follow content_type_id=ctype.id  object_id=actor.id %}" id="follow_button" >
-        
+    <a href="{% url actstream_follow content_type_id=ctype.id  object_id=actor.id %}"
+       id="follow_button"
+       style="{% if is_following %}display:none{% endif %}">
+        Follow
     </a> 
 </div>
 
