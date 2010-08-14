@@ -1,7 +1,7 @@
 {% if is_following %}
 {% else %}
 {% endif %}
-<div class="follow-unfollow-{{ctype.id}}-{{actor.id}}">
+<div id="follow-unfollow-{{ctype.id}}-{{actor.id}}">
     <a href="{% url actstream_unfollow content_type_id=ctype.id  object_id=actor.id %}"
        id="unfollow_button"
        style="{% if not is_following %}display:none{% endif %}">
@@ -16,11 +16,11 @@
 </div>
 
 <script type="text/javascript">
-    $(function () {
-        $("#follow-unfollow-{{ctype.id}}-{{actor.id}} #follow_button, #unfollow_button").click(function () {
-            $.post($(this).attr("href"), {});
-            $(this).parent().find("#follow_button, #unfollow_button").toggle();
-            return false
-        });
+
+    $("#follow-unfollow-{{ctype.id}}-{{actor.id}} #follow_button, #follow-unfollow-{{ctype.id}}-{{actor.id}} #unfollow_button").click(function () {
+        $.post($(this).attr("href"), {});
+        $(this).parent().find("#follow_button, #unfollow_button").toggle();
+        return false
     });
+
 </script>
