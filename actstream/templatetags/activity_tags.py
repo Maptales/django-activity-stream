@@ -134,6 +134,10 @@ def follow_unfollow(actor, user):
     ctype = ContentType.objects.get_for_model(actor)
     is_following = Follow.objects.is_following(actor, user)
     return {"actor": actor, "ctype":ctype, "user":user, "is_following":is_following}
+
+@register.inclusion_tag("activity/activity_stream.html")
+def target_stream(target):
+    return {"actions": target_stream(target)}
     
 register.tag('display_action', do_print_action)
 register.tag('display_action_short', do_print_action_short)
