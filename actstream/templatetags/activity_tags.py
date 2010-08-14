@@ -130,7 +130,7 @@ register = Library()
 @register.inclusion_tag("activity/follow_unfollow.html")
 def follow_unfollow(actor, user):
     # check if following already
-    ctype = ContentType.objects.get_for_model(content_object)
+    ctype = ContentType.objects.get_for_model(actor)
     return {"actor": actor, "ctype":ctype, "user":user}
     
 register.tag('display_action', do_print_action)
