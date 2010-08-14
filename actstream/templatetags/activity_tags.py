@@ -1,5 +1,6 @@
 from django.template import Variable, Library, Node, TemplateSyntaxError, TemplateDoesNotExist
 from django.template.loader import render_to_string
+from django.contrib.contenttypes.models import ContentType
 
 class DisplayActionLabel(Node):
     def __init__(self, actor, varname=None):
@@ -123,13 +124,19 @@ def do_print_action_label(parser, token):
     
 
 
-register = Library()     
+register = Library()
+
+
+@register.inclusion_tag("activity/follow_unfollow.html")
+def follow_unfollow(actor):
+    # check if following already
+    ctype = ContentType.objects.get_for_model(content_object)
+    return {"actor": actor, "ctype":ctype}
+    
 register.tag('display_action', do_print_action)
 register.tag('display_action_short', do_print_action_short)
 register.tag('display_grouped_actions', do_print_grouped_actions)
 register.tag('action_label', do_print_action_label)
-
-
 
 
 # just changing it to make it different

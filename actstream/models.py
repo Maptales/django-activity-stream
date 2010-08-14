@@ -20,6 +20,13 @@ class FollowManager(models.Manager):
         qs = (Action.objects.stream_for_actor(follow.actor) for follow in follows)
         if follows.count():
             return reduce(or_, qs).order_by('-timestamp')
+            
+    def is_following(self, user, object):
+        ctype = ContentType.objects.get_for_model( object)
+        return Follow.objects.filter(user=user,
+                                     object_id=object.pk,
+                                     content_type=ctype
+                                     ).count() > 0
     
 class Follow(models.Model):
     """
