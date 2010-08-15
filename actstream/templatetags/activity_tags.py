@@ -135,9 +135,37 @@ def follow_unfollow(actor, user):
     is_following = Follow.objects.is_following(actor, user)
     return {"actor": actor, "ctype":ctype, "user":user, "is_following":is_following}
 
+
 @register.inclusion_tag("activity/activity_stream.html")
-def target_stream(target):
-    return {"actions": user_stream(target)}
+def show_target_stream(target):
+    return {"actions": target_stream(target)}
+
+@register.inclusion_tag("activity/activity_stream.html")
+def show_user_stream(user):
+    return {"actions": user_stream(user)}
+    
+@register.inclusion_tag("activity/activity_stream.html")
+def show_actor_stream(actor):
+    return {"actions": actor_stream(actor)}
+
+@register.inclusion_tag("activity/activity_stream.html")
+def show_model_stream(model):
+    return {"actions": model_stream(model)}
+
+@register.inclusion_tag("activity/followers.html")
+def show_followers(actor, count=20):
+    ctype = ContentType.objects.get_for_model(actor)
+    follows = Follow.objects.filter(content_type=ctype, object_id=actor.pk)
+    if count:
+        follows = follows[0:count]
+    return {'followers': (f.user for f in follows), 'actor':actor}
+
+@register.inclusion_tag("activity/followers.html")
+def show_following(actor, content_type=None, count=20):
+    follows = Follow.objects.filter(user=actor)
+    if count:
+        follows = follows[0:count]
+    return {'followers': (f.actor for f in follows), 'actor':actor}
     
 register.tag('display_action', do_print_action)
 register.tag('display_action_short', do_print_action_short)
