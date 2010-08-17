@@ -1,6 +1,4 @@
-{% if is_following %}
-{% else %}
-{% endif %}
+{% if user.is_authenticated %}
 <div id="follow-unfollow-{{ctype.id}}-{{actor.id}}">
     <a href="{% url actstream_unfollow content_type_id=ctype.id  object_id=actor.id %}"
        id="unfollow_button"
@@ -24,3 +22,4 @@
     });
 
 </script>
+{% endif %}
