@@ -161,7 +161,7 @@ def follow(user, actor, send_action=True):
     
     """
     content_type = ContentType.objects.get_for_model(actor)
-    is_following = Follow.objects.get(user = user, object_id = actor.pk, 
+    is_following = Follow.objects.filter(user = user, object_id = actor.pk, 
                         content_type = content_type)
     
     if not is_following: # don't allow double follows
