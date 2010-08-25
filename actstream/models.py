@@ -160,11 +160,18 @@ def follow(user, actor, send_action=True):
         follow(request.user, group)
     
     """
-    if send_action:
-        action.send(user, verb=_('started following'), target=actor)
-    return Follow.objects.create(user = user, object_id = actor.pk, 
-        content_type = ContentType.objects.get_for_model(actor))
+    content_type = ContentType.objects.get_for_model(actor)
+    is_following = Follow.objects.get(user = user, object_id = actor.pk, 
+                        content_type = content_type)
     
+    if not is_following: # don't allow double follows
+        if send_action:
+            action.send(user, verb=_('started following'), target=actor)
+        return Follow.objects.create(user = user, object_id = actor.pk, 
+                                     content_type = content_type)
+    else:
+        return is_following[0]
+        
 def unfollow(user, actor, send_action=False):
     """
     Removes ``User`` -> ``Actor`` follow relationship. 
