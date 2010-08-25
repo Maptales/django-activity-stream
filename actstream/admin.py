@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.admin.actions import delete_selected
+
 from actstream.models import Action, Follow
 
 class ActionAdmin(admin.ModelAdmin):
@@ -11,6 +13,8 @@ class FollowAdmin(admin.ModelAdmin):
     list_display = ('__unicode__','user','actor')
     list_editable = ('user',)
     list_filter = ('user',)
+    ordering = ('user', 'object_id')
+    actions = [delete_selected]
 
 admin.site.register(Action, ActionAdmin)
 admin.site.register(Follow, FollowAdmin)
