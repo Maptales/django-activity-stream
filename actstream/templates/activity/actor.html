@@ -12,7 +12,6 @@ $(function () {
 </script>
 {% endblock %}
 
-
 {% block title %}{% ifequal request.user actor %}Your feed{% else %}{{ actor }}{% endifequal %}{% endblock %}
 {% block content_title %}{% ifequal request.user actor %}Your feed{% else %}{{ actor }}{% endifequal %}{% endblock %}
 

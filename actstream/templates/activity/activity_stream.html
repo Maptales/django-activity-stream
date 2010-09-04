@@ -1,7 +1,8 @@
+{% load i18n %}
 <ul>
 {% for action in actions %}
     <li>{% include 'activity/action.html' %}</li>
 {% empty %}
-    No actions yet    
+    {% trans "No actions yet" %}  
 {% endfor %}
 </ul>
