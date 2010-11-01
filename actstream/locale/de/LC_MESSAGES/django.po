@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-04 11:41+0200\n"
+"POT-Creation-Date: 2010-09-04 13:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,15 +19,20 @@ msgstr ""
 
 #: models.py:169
 msgid "started following"
-msgstr ""
+msgstr "folgt"
 
 #: models.py:192
 msgid "stopped following"
 msgstr ""
 
+#: templates/activity/action.html:8
+#, python-format
+msgid "%(timesince_in)s ago"
+msgstr "vor %(timesince_in)s"
+
 #: templates/activity/activity_stream.html:6
 msgid "No actions yet"
-msgstr ""
+msgstr "Noch keine Aktivität"
 
 #: templates/activity/detail.html:4
 #, python-format
@@ -35,11 +40,13 @@ msgid ""
 "\n"
 "On %(date)s at %(time)s\n"
 msgstr ""
+"\n"
+"Am %(date)s um %(time)s\n"
 
 #: templates/activity/follow_unfollow.html:7
 msgid "Unfollow"
-msgstr ""
+msgstr "Folgen"
 
 #: templates/activity/follow_unfollow.html:13
 msgid "Follow"
-msgstr ""
+msgstr "Nicht mehr beobachten"
