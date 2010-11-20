@@ -140,21 +140,29 @@ def global_stream(offset, count):
     return {"actions": Action.objects.all().order_by('-timestamp')[offset:count]}
 
 # shows actions that have been done TO an object
-@register.inclusion_tag("activity/activity_stream.html")
-def show_target_stream(target, offset=0, count=30):
-    return {"actions": target_stream(target)}
+@register.inclusion_tag("activity/activity_stream.html", takes_context=True)
+def show_target_stream(context, target, offset=0, count=30):
+    params = {"actions": target_stream(target)[offset:count]}
+    context.update(params)
+    return context
 
-@register.inclusion_tag("activity/activity_stream.html")
-def show_user_stream(user, offset=0, count=30):
-    return {"actions": user_stream(user)}
+@register.inclusion_tag("activity/activity_stream.html", takes_context=True)
+def show_user_stream(context, user, offset=0, count=30):
+    params = {"actions": user_stream(user)[offset:count]}
+    context.update(params)
+    return context
     
-@register.inclusion_tag("activity/activity_stream.html")
-def show_actor_stream(actor, offset=0, count=30):
-    return {"actions": actor_stream(actor)}
+@register.inclusion_tag("activity/activity_stream.html", takes_context=True)
+def show_actor_stream(context, actor, offset=0, count=30):
+    params = {"actions": actor_stream(actor)[offset:count]}
+    context.update(params)
+    return context
 
-@register.inclusion_tag("activity/activity_stream.html")
-def show_model_stream(model, offset=0, count=30):
-    return {"actions": model_stream(model)}
+@register.inclusion_tag("activity/activity_stream.html", takes_context=True)
+def show_model_stream(context, model, offset=0, count=30):
+    params = {"actions": model_stream(model)[offset:count]}
+    context.update(params)
+    return context
 
 @register.inclusion_tag("activity/followers.html")
 def show_followers(actor, count=20):
