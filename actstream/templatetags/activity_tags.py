@@ -159,6 +159,12 @@ def show_actor_stream(context, actor, offset=0, count=30):
     return context
 
 @register.inclusion_tag("activity/activity_stream.html", takes_context=True)
+def show_target_stream(context, target, offset=0, count=30):
+    params = {"actions": target_stream(target)[offset:count]}
+    context.update(params)
+    return context
+
+@register.inclusion_tag("activity/activity_stream.html", takes_context=True)
 def show_model_stream(context, model, offset=0, count=30):
     params = {"actions": model_stream(model)[offset:count]}
     context.update(params)
