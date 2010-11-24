@@ -5,7 +5,7 @@ from actstream.models import Action, Follow
 
 class ActionAdmin(admin.ModelAdmin):
     date_hierarchy = 'timestamp'
-    list_display = ('__unicode__','actor','verb','target')
+    list_display = ('__unicode__','actor','verb','target', 'object')
     list_editable = ('verb',)
     list_filter = ('timestamp',)
 

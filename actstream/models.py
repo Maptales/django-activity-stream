@@ -230,12 +230,14 @@ def action_handler(verb, target=None, object=None, **kwargs):
                     public=bool(kwargs.pop('public', True)),
                     description=kwargs.pop('description', None),
                     timestamp=kwargs.pop('timestamp', datetime.now()))
+    
+    import pdb; pdb.set_trace()
     if target:
         action.target_object_id=target.pk
         action.target_content_type=ContentType.objects.get_for_model(target)
     
     if object:
-        action.object_object_id=target.pk
+        action.object_object_id=object.pk
         action.object_content_type=ContentType.objects.get_for_model(object)
         
     action.save()
