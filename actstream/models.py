@@ -114,6 +114,11 @@ class Action(models.Model):
     target_object_id = models.PositiveIntegerField(blank=True,null=True) 
     target = generic.GenericForeignKey('target_content_type','target_object_id')
     
+    # many implementations of activity also have an object of the action
+    object_content_type = models.ForeignKey(ContentType,blank=True,null=True)
+    object_object_id = models.PositiveIntegerField(blank=True,null=True) 
+    object = generic.GenericForeignKey('object_content_type','object_object_id')
+    
     timestamp = models.DateTimeField(auto_now_add=True)
     
     public = models.BooleanField(default=True)
@@ -216,7 +221,7 @@ def target_stream(target):
 target_stream.__doc__ = Action.objects.stream_for_target.__doc__
 
     
-def action_handler(verb, target=None, **kwargs):
+def action_handler(verb, target=None, object=None, **kwargs):
     actor = kwargs.pop('sender')
     kwargs.pop('signal', None)
     action = Action(actor_content_type=ContentType.objects.get_for_model(actor),
@@ -228,7 +233,11 @@ def action_handler(verb, target=None, **kwargs):
     if target:
         action.target_object_id=target.pk
         action.target_content_type=ContentType.objects.get_for_model(target)
-
+    
+    if object:
+        action.object_object_id=target.pk
+        action.object_content_type=ContentType.objects.get_for_model(object)
+        
     action.save()
     
 action.connect(action_handler, dispatch_uid="actstream.models")
