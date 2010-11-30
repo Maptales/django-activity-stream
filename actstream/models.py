@@ -231,7 +231,6 @@ def action_handler(verb, target=None, object=None, **kwargs):
                     description=kwargs.pop('description', None),
                     timestamp=kwargs.pop('timestamp', datetime.now()))
     
-    import pdb; pdb.set_trace()
     if target:
         action.target_object_id=target.pk
         action.target_content_type=ContentType.objects.get_for_model(target)
