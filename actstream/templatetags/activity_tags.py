@@ -148,7 +148,8 @@ def show_target_stream(context, target, offset=0, count=30):
 
 @register.inclusion_tag("activity/activity_stream.html", takes_context=True)
 def show_user_stream(context, user, offset=0, count=30):
-    params = {"actions": user_stream(user)[offset:count]}
+    # make a list so it is possible to get last item in template
+    params = {"actions": list(user_stream(user)[offset:count])}
     context.update(params)
     return context
     

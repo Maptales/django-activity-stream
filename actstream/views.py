@@ -17,6 +17,34 @@ def respond(request, code):
         return HttpResponseRedirect(request.REQUEST['next'])
     return type('Response%d' % code, (HttpResponse,), {'status_code': code})()
 
+
+@login_required
+def delete(request, action_id):
+    action = get_object_or_404(Action, pk=action_id)
+    if request.method == "POST":
+        if action.actor == request.user:
+            action.delete()
+            return HttpResponse(status=200, content="OK")
+        else:
+            return HttpResponse(status=400, content="Not allowed")
+    else:
+        return HttpResponse(status=400, content="Not allowed")
+    
+
+def load_activity(request, id, template_name='activity/actions.html'):
+    """
+        loads the next batch of actions starting from the last action passed up,
+        it uses the last action id since pagination might be off due to new activities
+        generated in the meantime
+    """
+    user = get_object_or_404(User,pk=id)
+    last_action = int(request.GET.get("last_action"))
+    actions = user_stream(user).filter(pk__lte=last_action)[0:20]
+    return render_to_response(template_name,{
+        "actions": actions,
+    }, context_instance=RequestContext(request))
+    
+    
 @login_required
 def follow_unfollow(request, content_type_id, object_id, do_follow=True):
     """
@@ -41,6 +69,7 @@ def stream(request):
         'actor':request.user,'action_list':user_stream(request.user)
     }, context_instance=RequestContext(request))
     
+    
 def followers(request, content_type_id, object_id):
     """
     Creates a listing of ``User``s that follow the actor defined by ``content_type_id``, ``object_id``
@@ -52,6 +81,7 @@ def followers(request, content_type_id, object_id):
         'followers': (f.user for f in follows), 'actor':actor
     }, context_instance=RequestContext(request))
     
+    
 def user(request, username):
     """
     ``User`` focused activity stream. (Eg: Profile page twitter.com/justquick)
@@ -62,6 +92,7 @@ def user(request, username):
         'actor':user,'action_list':actor_stream(user)
     }, context_instance=RequestContext(request))
     
+    
 def detail(request, action_id):
     """
     ``Action`` detail view (pretty boring, mainly used for get_absolute_url)
@@ -69,6 +100,7 @@ def detail(request, action_id):
     return render_to_response('activity/detail.html', {
         'action': get_object_or_404(Action, pk=action_id)
     }, context_instance=RequestContext(request))
+    
     
 def actor(request, content_type_id, object_id):
     """
@@ -79,6 +111,7 @@ def actor(request, content_type_id, object_id):
     return render_to_response('activity/actor.html', {
         'action_list': actor_stream(actor), 'actor':actor,'ctype':ctype
     }, context_instance=RequestContext(request))
+    
     
 def model(request, content_type_id):
     """

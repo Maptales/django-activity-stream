@@ -26,6 +26,12 @@ urlpatterns = patterns('actstream.views',
         'model', name='actstream_model'),    
     
     url(r'^detail/(?P<action_id>\d+)/$', 'detail', name='actstream_detail'),
+    url(r'^load/(?P<id>\d+)/$', 'load_activity', name='actstream_load'),
+    url(r'^delete/(?P<action_id>\d+)/$', 'delete', name='actstream_delete'),
+    
     url(r'^(?P<username>[-\w]+)/$', 'user', name='actstream_user'),
     url(r'^$', 'stream', name='actstream'),
+    
+    
+    
 )

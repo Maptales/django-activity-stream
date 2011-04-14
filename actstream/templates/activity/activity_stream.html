@@ -1,8 +1,4 @@
 {% load i18n %}
 <ul class="activitystream">
-{% for action in actions %}
-    <li>{% include 'activity/action.html' %}</li>
-{% empty %}
-    {% trans "No actions yet" %}  
-{% endfor %}
+    {% include "activity/actions.html" %}
 </ul>

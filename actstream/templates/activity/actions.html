@@ -1,0 +1,5 @@
+{% for action in actions %}
+    <li>{% include 'activity/action.html' %}</li>
+{% empty %}
+    {% trans "No actions yet" %}  
+{% endfor %}
